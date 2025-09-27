@@ -1,0 +1,632 @@
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database ecomnrence;
+Query OK, 1 row affected (0.115 sec)
+
+mysql> show database ecomnrence;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database ecomnrence' at line 1
+mysql> show database ecomnrence
+    -> \c
+mysql> show database ecomnerence;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database ecomnerence' at line 1
+mysql> use ecomnrence;
+Database changed
+mysql> create table customer (cid int (10),cname varchar(20),caddress varchar(20),ccontact int(10));
+Query OK, 0 rows affected, 2 warnings (0.213 sec)
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | YES  |     | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| caddress | varchar(20) | YES  |     | NULL    |       |
+| ccontact | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.019 sec)
+
+mysql> alter table customer add primary key(cid);
+Query OK, 0 rows affected (0.339 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| caddress | varchar(20) | YES  |     | NULL    |       |
+| ccontact | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.014 sec)
+
+mysql> create table product ( pid int(10),pname varchar(20),price float);
+Query OK, 0 rows affected, 1 warning (0.235 sec)
+
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | YES  |     | NULL    |       |
+| pname | varchar(20) | YES  |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+mysql> alter table product add category varchar ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table product add category varchar(20);
+Query OK, 0 rows affected (0.338 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | int         | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  |     | NULL    |       |
+| price    | float       | YES  |     | NULL    |       |
+| category | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.012 sec)
+
+mysql> alter table product modify pid int CHECK(pid>100);
+Query OK, 0 rows affected (0.405 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | int         | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  |     | NULL    |       |
+| price    | float       | YES  |     | NULL    |       |
+| category | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+mysql> category varchar(20) CHECK (category in ('ele','stat'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'category varchar(20) CHECK (category in ('ele','stat'))' at line 1
+mysql> alter table product modify pname varchar(20) UNIQUE key;
+Query OK, 0 rows affected (0.183 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | int         | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | UNI | NULL    |       |
+| price    | float       | YES  |     | NULL    |       |
+| category | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+mysql> alter table modify price float DEFAULT 0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'price float DEFAULT 0' at line 1
+mysql> alter table product modify price float DEFAULT 0;
+Query OK, 0 rows affected (0.124 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pid      | int         | YES  |     | NULL    |       |
+| pname    | varchar(20) | YES  | UNI | NULL    |       |
+| price    | float       | YES  |     | 0       |       |
+| category | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.012 sec)
+
+mysql> create table purchase (puid int (10),primary key,cid int(10),pid int(10),FOREIGN key(cid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',cid int(10),pid int(10),FOREIGN key(cid))' at line 1
+mysql> create table purchase (puid int (10) primary key,cid int(10),pid int(10),FOREIGN key(cid)REFERENCES customer (cid));
+Query OK, 0 rows affected, 3 warnings (0.398 sec)
+
+mysql> desc purchase;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| puid  | int  | NO   | PRI | NULL    |       |
+| cid   | int  | YES  | MUL | NULL    |       |
+| pid   | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.015 sec)
+
+mysql> alter table purchase add quantity int(10);
+Query OK, 0 rows affected, 1 warning (0.582 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> create user 'poonam'@localhost identified by 'poonam123';
+Query OK, 0 rows affected (0.127 sec)
+
+mysql> grant insert, update on ecomnrence.customer to 'poonam'@localhost;
+Query OK, 0 rows affected (0.087 sec)
+
+mysql> grant select ,insert,update on ecomnrence.purchase to'poonam'@localhost;
+Query OK, 0 rows affected (0.091 sec)
+
+mysql> create user 'admin'@localhost identified by 'admin';
+ERROR 1396 (HY000): Operation CREATE USER failed for 'admin'@'localhost'
+mysql> create user 'pathadeadmin'@localhost identified by 'admin123';
+Query OK, 0 rows affected (0.119 sec)
+
+mysql> grant all privileges on ecomnrence.* to 'pathadeadmin';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> grant all privileges on ecomnrence.* to 'pathadeadmin'@localhost;
+Query OK, 0 rows affected (0.097 sec)
+
+mysql> use ecomnrence;
+Database changed
+mysql> slect *from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect *from customer' at line 1
+mysql> select *from customer;
+Empty set (0.009 sec)
+
+mysql> insert into customer values(101,'rohit',varale,9000000000;)
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+    -> INSERT INTO customer VALUES (101,'rohit','varale',9000000000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+INSERT INTO customer VALUES (101,'rohit','varale',9000000000)' at line 1
+mysql> INSERT INTO customer
+    -> VALUES(101,'ROHIT','VARALE',9000000000);
+ERROR 1264 (22003): Out of range value for column 'ccontact' at row 1
+mysql> VALUES(101,'ROHIT','VARALE',900000000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(101,'ROHIT','VARALE',900000000)' at line 1
+mysql> VALUES'(101,'ROHIT','VARALE',900000000)';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''(101,'ROHIT','VARALE',900000000)'' at line 1
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| caddress | varchar(20) | YES  |     | NULL    |       |
+| ccontact | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.016 sec)
+
+mysql> INSERT INTO customer(cid, cname, caddress,ccontact) VALUES (101,'rohit','varale',12345 6789);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '6789)' at line 1
+mysql> INSERT INTO customer(cid, cname, caddress,ccontact) VALUES (101,'rohit','varale',1234567890);
+Query OK, 1 row affected (0.086 sec)
+
+mysql> slecet * from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slecet * from customer' at line 1
+mysql> selecet * from customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selecet * from customer' at line 1
+mysql> select * from customer;
++-----+-------+----------+------------+
+| cid | cname | caddress | ccontact   |
++-----+-------+----------+------------+
+| 101 | rohit | varale   | 1234567890 |
++-----+-------+----------+------------+
+1 row in set (0.004 sec)
+
+mysql>
+
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u poonam -p
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ecomnrence         |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.013 sec)
+
+mysql> use ecomnrence;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_ecomnrence |
++----------------------+
+| customer             |
+| purchase             |
++----------------------+
+2 rows in set (0.014 sec)
+
+mysql> desc customer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| cid      | int         | NO   | PRI | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| caddress | varchar(20) | YES  |     | NULL    |       |
+| ccontact | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+mysql> select * from customer;
+ERROR 1142 (42000): SELECT command denied to user 'poonam'@'localhost' for table 'customer'
+mysql> alter table customer add cemail varchar(20);
+ERROR 1142 (42000): ALTER command denied to user 'poonam'@'localhost' for table 'customer'
+mysql> INSERT INTO customer (cid, cname, caddress, ccontact) VALUES (102,'amit','talegao',0987654321);
+Query OK, 1 row affected (0.091 sec)
+
+mysql> select * from customer;
+ERROR 1142 (42000): SELECT command denied to user 'poonam'@'localhost' for table 'customer'
+mysql>
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table record (pid int(10), pname varchar(20),price int(10));
+ERROR 1046 (3D000): No database selected
+mysql> create database employee;
+Query OK, 1 row affected (0.588 sec)
+
+mysql> create database ecomnrence;
+Query OK, 1 row affected (0.117 sec)
+
+mysql> create table product(pid int(10),pname varchar(20) price int(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'price int(10))' at line 1
+mysql> create table product(pid int(10),pname varchar(20), price int(10));
+ERROR 1046 (3D000): No database selected
+mysql> describe ecomnrence;
+ERROR 1046 (3D000): No database selected
+mysql> create database ecomnrence;
+ERROR 1007 (HY000): Can't create database 'ecomnrence'; database exists
+mysql> change ecomnrence;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ecomnrence' at line 1
+mysql> change ecomnrence;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ecomnrence' at line 1
+mysql> create database ecommerce;
+Query OK, 1 row affected (0.113 sec)
+
+mysql> use ecommerce;
+Database changed
+mysql> create table product(pid int(10),pname varchar(10), price int(10));
+Query OK, 0 rows affected, 2 warnings (0.425 sec)
+
+mysql> insert into product(1,'electronic',10000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'electronic',10000)' at line 1
+mysql> INSERT into product
+    -> VALUES(1,'electronic',10000);
+Query OK, 1 row affected (0.167 sec)
+
+mysql> select * from product;
++------+------------+-------+
+| pid  | pname      | price |
++------+------------+-------+
+|    1 | electronic | 10000 |
++------+------------+-------+
+1 row in set (0.085 sec)
+
+mysql> create table customer (cid int(10),cname varchar(10),caddress varchar(10),ccontact int(10));
+Query OK, 0 rows affected, 2 warnings (0.202 sec)
+
+mysql> create table purchase (pid int(10) primary key,quantity int(10),pdate varchar(10));
+Query OK, 0 rows affected, 2 warnings (0.232 sec)
+
+mysql>
+mysql> create table purchase (pid int(10) primary key,quantity int(10),pdate date, FOREIGN KEY(pid) REFERENCES product(pid),FOREIGN KEY (pid) REFERENCES customer(cid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table product add primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql>
+mysql> alter table product ADD  primary(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(pid)' at line 1
+mysql> alter table product add primary key(pid);
+Query OK, 0 rows affected (0.672 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table customer add primary key(cid);
+Query OK, 0 rows affected (0.339 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table purch(pid int primary key,cid int,pid int,qnty int,pdate date,FOREIGN key(pid)REFERENCES product(pid),FOREIGN key(cid) REFERENCES customer(cid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table purch(pid int primary key,cid int,pid int,qnty int,pdate date,FOREIGN key(pid)REFERENCES product(pid),FOREIGN key(cid) REFERENCES customer(cid));
+ERROR 1060 (42S21): Duplicate column name 'pid'
+mysql> create table purch(poid int primary key,cid int,pid int,qnty int,pdate date,FOREIGN key(pid)REFERENCES product(pid),FOREIGN key(cid) REFERENCES customer(cid));
+Query OK, 0 rows affected (0.309 sec)
+
+mysql> create view v2 as cname,product,qnty,pdate;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cname,product,qnty,pdate' at line 1
+mysql> create view v2 as cname,product,qnty,pdate
+    -> select cname,pname,qnty,pdate from customer,product,purchase WHERE customer cid=purchase cid and product pid=purch pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cname,product,qnty,pdate
+select cname,pname,qnty,pdate from customer,product,pur' at line 1
+mysql> select cname,pname,qnty,pdate from customer,product,purch WHERE customer cid=purchase cid and product pid=purch pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cid=purchase cid and product pid=purch pid' at line 1
+mysql> select cname,pname,qnty,pdate from customer,product,purch WHERE customer cid=purch cid and product pid=purch pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cid=purch cid and product pid=purch pid' at line 1
+mysql> select cname,pname,qnty,pdate from customer,product,purch WHERE customer cid=purch cid and product pid=purch poid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cid=purch cid and product pid=purch poid' at line 1
+mysql> select cname,pname,qnty,pdate from customer,product,purch WHERE customer cid=purch cid and product pid=purch pid;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cid=purch cid and product pid=purch pid' at line 1
+ERROR:
+No query specified
+
+mysql> create view v2 as name,product,qnty,pdate
+    -> create view v2 as cname,product,qnty,pdate
+    -> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid=purch.cid and produc.pid=purch.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name,product,qnty,pdate
+create view v2 as cname,product,qnty,pdate
+select cname,' at line 1
+mysql> ^C
+mysql>  create view v2 as name,product,qnty,pdate
+    ->     -> create view v2 as cname,product,qnty,pdate
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> select *from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name,product,qnty,pdate
+    -> create view v2 as cname,product,qnty,pdate
+
+
+
+
+
+
+' at line 1
+mysql>  create view v2 as cname,product,qnty,pdate
+    ->     -> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid=purch.cid and produc.pid=purch.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cname,product,qnty,pdate
+    -> select cname, pname,qnty,pdate from customer,pro' at line 1
+mysql>     -> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid=purch.cid and product.pid=purch.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid' at line 1
+mysql>     -> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid=purch.cid and product.pid=purch.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> select cname, pname,qnty,pdate from customer,product,purch WHERE customer.cid' at line 1
+mysql> create v2 as
+    -> select customer.cid, customer.cname,product.pid,product.pname as product_pname
+    -> from customer
+    -> join purch on customer.cid=purch.cid
+    -> join product on product.pid = purch.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'v2 as
+select customer.cid, customer.cname,product.pid,product.pname as product_' at line 1
+mysql> create index xyz on product(pid);
+Query OK, 0 rows affected (0.400 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create unique index pqr on product(pname);
+Query OK, 0 rows affected (0.354 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create  index pqr on customer(cname,ccontact);
+Query OK, 0 rows affected (0.199 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> create view v1 as select pid,pname,price from product;
+Query OK, 0 rows affected (0.149 sec)
+
+mysql> insert into v1 VALUES (101,pc.10000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into v1 VALUES (2,pc.10000);)
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+    -> insert into product VALUES (2,pc,10000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+insert into product VALUES (2,pc,10000)' at line 1
+mysql> upadate v1 set price = 200;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'upadate v1 set price = 200' at line 1
+mysql> select * from v1;
++-----+------------+-------+
+| pid | pname      | price |
++-----+------------+-------+
+|   1 | electronic | 10000 |
++-----+------------+-------+
+1 row in set (0.061 sec)
+
+mysql> create v2 as
+    -> select cname,
+    ->
+    -> select cname,
+    -> /c
+    -> slect*from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'v2 as
+select cname,
+
+select cname,
+/c
+slect*from product' at line 1
+mysql> create view v2
+    -> create view v2 as
+    -> select cname,pname,qnty from customer,product,purch WHERE customer.cid=purch.pid and purch.pid=product.pid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create view v2 as
+select cname,pname,qnty from customer,product,purch WHERE cust' at line 2
+mysql> select cname,pname,qnty from customer,product,purch WHERE customer.cid=purch.cid and purch.pid=product.pid;
+Empty set (0.129 sec)
+
+mysql> show index xyz from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'xyz from product' at line 1
+mysql> show index xyz from product(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'xyz from product(pid)' at line 1
+mysql> create index pqr on product(pid);
+ERROR 1061 (42000): Duplicate key name 'pqr'
+mysql> create index abc on product(pid);
+Query OK, 0 rows affected, 1 warning (0.497 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> show index from product(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(pid)' at line 1
+mysql> show index from product;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| product |          0 | PRIMARY  |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          0 | pqr      |            1 | pname       | A         |           1 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| product |          1 | xyz      |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          1 | abc      |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+4 rows in set (0.284 sec)
+
+mysql> alter table product drop index pqr from product(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product(pid)' at line 1
+mysql> alter table product drop index pqr from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product' at line 1
+mysql> alter table product drop index pqr from product(pname);_
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product(pname)' at line 1
+    -> alter table product drop index pqr from product(pname);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '_
+alter table product drop index pqr from product(pname)' at line 1
+mysql> alter table product drop index abc from product(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product(pid)' at line 1
+mysql> alter table product drop index abc from product;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from product' at line 1
+mysql> alter table product drop index abc;
+Query OK, 0 rows affected (0.182 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show index from product(pid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(pid)' at line 1
+mysql> show index from product;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| product |          0 | PRIMARY  |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| product |          0 | pqr      |            1 | pname       | A         |           1 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| product |          1 | xyz      |            1 | pid         | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.014 sec)
+
+mysql> insert into product VALUES (2,pc,20000);
+ERROR 1054 (42S22): Unknown column 'pc' in 'field list'
+mysql> insert into product VALUES (2,'fridge',20000);
+Query OK, 1 row affected (0.104 sec)
+
+mysql> insert into product VALUES (3,'machine',30000);
+Query OK, 1 row affected (0.088 sec)
+
+mysql> select * from product;
++-----+------------+-------+
+| pid | pname      | price |
++-----+------------+-------+
+|   1 | electronic | 10000 |
+|   2 | fridge     | 20000 |
+|   3 | machine    | 30000 |
++-----+------------+-------+
+3 rows in set (0.004 sec)
+
+mysql> insert into product values (3,'bed',23000);
+ERROR 1062 (23000): Duplicate entry '3' for key 'product.PRIMARY'
+mysql> insert into product values (4,'bed',23000);
+Query OK, 1 row affected (0.086 sec)
+
+mysql> select * from product;
++-----+------------+-------+
+| pid | pname      | price |
++-----+------------+-------+
+|   1 | electronic | 10000 |
+|   2 | fridge     | 20000 |
+|   3 | machine    | 30000 |
+|   4 | bed        | 23000 |
++-----+------------+-------+
+4 rows in set (0.004 sec)
+
+mysql>
+mysql> select REVERSE(machine) AS reverse_name from product;
+ERROR 1054 (42S22): Unknown column 'machine' in 'field list'
+mysql> select REVERSE(pname) AS reverse_name from product;
++--------------+
+| reverse_name |
++--------------+
+| deb          |
+| cinortcele   |
+| egdirf       |
+| enihcam      |
++--------------+
+4 rows in set (0.005 sec)
+
+mysql> select SUBSTRING(pname,1,3) AS short_name from product;
++------------+
+| short_name |
++------------+
+| bed        |
+| ele        |
+| fri        |
+| mac        |
++------------+
+4 rows in set (0.058 sec)
+
+mysql> select UPPERCASE(pname) AS upper_name from product;
+ERROR 1305 (42000): FUNCTION ecommerce.UPPERCASE does not exist
+mysql> select UPPER(pname) AS upper_name from product;
++------------+
+| upper_name |
++------------+
+| BED        |
+| ELECTRONIC |
+| FRIDGE     |
+| MACHINE    |
++------------+
+4 rows in set (0.063 sec)
+
+mysql> select LOWER(pname) AS lower_name from product;
++------------+
+| lower_name |
++------------+
+| bed        |
+| electronic |
+| fridge     |
+| machine    |
++------------+
+4 rows in set (0.004 sec)
+
+mysql> select LENGTH(pname) AS length_name from product;
++-------------+
+| length_name |
++-------------+
+|           3 |
+|          10 |
+|           6 |
+|           7 |
++-------------+
+4 rows in set (0.005 sec)
+
+mysql>
