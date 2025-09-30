@@ -1,0 +1,104 @@
+explicit cursor:
+
+DECLARE
+CURSOR prod_cursor IS SELECT pid, pname, price FROM product;
+        
+p_pid   product.pid%TYPE;
+p_pname product.pname%TYPE;
+p_pr    product.price%TYPE;
+BEGIN
+OPEN prod_cursor;
+LOOP
+FETCH prod_cursor INTO p_pid, p_pname, p_pr;
+EXIT WHEN prod_cursor%NOTFOUND;
+DBMS_OUTPUT.PUT_LINE(p_pid || ',' || p_pname || ',' || p_pr);
+END LOOP;
+CLOSE prod_cursor;
+END;
+/
+
+
+implicit cursor:
+
+DECLARE 
+p_price product.price%TYPE;
+BEGIN
+SELECT price 
+INTO p_price
+FROM product
+WHERE pid = 3;  
+DBMS_OUTPUT.PUT_LINE('Price fetched: ' || p_price);
+
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('Product not found.');
+END;
+/
+
+
+output:
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Thu Sep 18 2025 21:34:28 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> create table product(pid int,pname varchar2(30),price number(10,2));
+
+Table created.
+
+SQL> INSERT INTO product (pid, pname, price) VALUES (101, 'Mobile', 50000);
+
+1 row created.
+
+SQL> INSERT INTO product (pid, pname, price) VALUES (2, 'Tab', 12000);
+
+1 row created.
+
+SQL> INSERT INTO product (pid, pname, price) VALUES (3, 'laptop', 80000);
+
+SQL> select * from product;
+
+       PID PNAME                               PRICE
+---------- ------------------------------ ----------
+         1 Mobile                              50000
+         2 Tab                                 12000
+         3 Laptop                              80000
+
+SQL> set serveroutput on
+SQL> @"C:\Users\poonam\OneDrive\Desktop\poonamsql\implicit.sql"
+Price fetched: 80000
+
+PL/SQL procedure successfully completed.
+
+SQL> @"C:\Users\poonam\OneDrive\Desktop\poonamsql\explicit.sql"
+1,USB Speaker,1500
+2,Wireless Mouse,1200
+3,Gaming Keyboard,1800
+
+PL/SQL procedure successfully completed.
+
+SQL> @"C:\Users\poonam\OneDrive\Desktop\poonam\parameterized.sql"
+Enter value for enter_price: 12000
+old  14:   v_input := &enter_price;
+new  14:   v_input := 12000;
+Products with price above 1200:
+1,Mobile,50000
+3,Laptop,80000
+Done fetching products.
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from product;
+
+        PID PNAME                               PRICE
+---------- ------------------------------ ----------
+         1 Mobile                              50000
+         2 Tab                                 12000
+         3 Laptop                              80000
+
+SQL>
+
